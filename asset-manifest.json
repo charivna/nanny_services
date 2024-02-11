@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/nanny_services/static/css/main.7acaea2f.css",
+    "main.js": "/nanny_services/static/js/main.e3c09590.js",
+    "index.html": "/nanny_services/index.html",
+    "main.7acaea2f.css.map": "/nanny_services/static/css/main.7acaea2f.css.map",
+    "main.e3c09590.js.map": "/nanny_services/static/js/main.e3c09590.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.e3c09590.js"
+  ]
+}
