@@ -14,14 +14,14 @@ const Layout = () => {
   return (
     <>
       <Header>
-        <Logo to="/">Nanny.Services</Logo>
+        <Logo to="/">psychologists.services</Logo>
         <Nav>
           <NavList>
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/nannies">Nannies</NavLink>
+              <NavLink to="/psychologists">Psychologists</NavLink>
             </li>
             {/* <li>
               <NavLink to="/favorites">Favorites</NavLink>
