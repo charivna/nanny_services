@@ -1,11 +1,13 @@
 import {
+  Btn,
+  Catalog,
   Header,
-  LogInBtn,
+  Home,
   Logo,
   Nav,
   NavBtn,
   NavList,
-  RegBtn,
+  Psycho,
 } from './Layout.styled';
 
 const { NavLink, Outlet } = require('react-router-dom');
@@ -14,25 +16,27 @@ const Layout = () => {
   return (
     <>
       <Header>
-        <Logo to="/">psychologists.services</Logo>
         <Nav>
+          <Logo to="/">
+            <Psycho>psychologists.</Psycho>services
+          </Logo>
           <NavList>
-            <li>
+            <Home>
               <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/psychologists">Psychologists</NavLink>
-            </li>
+            </Home>
+            <Catalog>
+              <NavLink to="/catalog">Psychologists</NavLink>
+            </Catalog>
             {/* <li>
               <NavLink to="/favorites">Favorites</NavLink>
             </li> */}
           </NavList>
           <NavBtn>
             <li>
-              <LogInBtn>Log In</LogInBtn>
+              <Btn>Log In</Btn>
             </li>
             <li>
-              <RegBtn>Registration</RegBtn>
+              <Btn>Registration</Btn>
             </li>
           </NavBtn>
         </Nav>
