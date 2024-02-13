@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Block = styled.div`
   max-width: 595px;
   margin-top: 126px;
-  margin-right: 125px;
 `;
 
 export const Tittle = styled.h1`

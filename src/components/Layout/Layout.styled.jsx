@@ -6,7 +6,6 @@ export const Header = styled.header`
   box-sizing: border-box;
   max-width: 1440px;
   padding: 24px 128px;
-  margin-bottom: 20px;
   align-items: center;
   border-bottom: 1px solid rgba(25, 26, 21, 0.1);
 `;
@@ -57,7 +56,7 @@ export const Home = styled.li`
         border-radius: 50%;
         position: absolute;
         left: 50%;
-        bottom: -8px;
+        bottom: -10px;
         transform: translateX(-50%);
       }
     }
@@ -126,7 +125,6 @@ export const Container = styled.div`
   box-sizing: border-box;
   max-width: 1440px;
   padding-left: 128px;
-  padding-right: 128px;
   padding-bottom: 140px;
   display: flex;
   flex-wrap: wrap;
