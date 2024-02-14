@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { LogInModal } from 'components/ModalLogIn/LogInModal';
 import {
   Btn,
   Catalog,
@@ -9,10 +11,29 @@ import {
   NavList,
   Psycho,
 } from './Layout.styled';
+import { RegisterModal } from 'components/ModalRegister/RegisterModal';
 
 const { NavLink, Outlet } = require('react-router-dom');
 
 const Layout = () => {
+  const [isModalLoginOpen, setModalLoginOpen] = useState(false);
+  const [isModalRegOpen, setModalRegOpen] = useState(false);
+
+  const handlerClickLogin = () => {
+    setModalLoginOpen(true);
+  };
+
+  const handlerClickReg = () => {
+    setModalRegOpen(true);
+  };
+
+  const handlerCloseLoginModal = () => {
+    setModalLoginOpen(false);
+  };
+
+  const handlerCloseRegModal = () => {
+    setModalRegOpen(false);
+  };
   return (
     <>
       <Header>
@@ -33,13 +54,15 @@ const Layout = () => {
           </NavList>
           <NavBtn>
             <li>
-              <Btn>Log In</Btn>
+              <Btn onClick={handlerClickLogin}>Log In</Btn>
             </li>
             <li>
-              <Btn>Registration</Btn>
+              <Btn onClick={handlerClickReg}>Registration</Btn>
             </li>
           </NavBtn>
         </Nav>
+        {isModalLoginOpen && <LogInModal onClose={handlerCloseLoginModal} />}
+        {isModalRegOpen && <RegisterModal onClose={handlerCloseRegModal} />}
       </Header>
       <main>
         <Outlet />

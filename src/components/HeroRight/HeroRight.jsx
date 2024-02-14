@@ -14,7 +14,7 @@ import icons from '../../common/sprite.svg';
 const HeroRight = () => {
   return (
     <Block>
-      <Image src={girlImage} alt="girl" width="464" border-radius="10" />
+      <Image src={girlImage} alt="girl" width="464" />
 
       <Rectangle>
         <Check>
