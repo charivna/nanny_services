@@ -11,7 +11,7 @@ const HeroLeft = () => {
         We help you to reveal your potential, overcome challenges and find a
         guide in your own life with the help of our experienced psychologists.
       </Text>
-      <StartBtn>
+      <StartBtn to="/catalog">
         Get started
         <span>
           <svg width={18} height={18}>

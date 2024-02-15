@@ -2,6 +2,9 @@ import icons from '../../common/sprite.svg';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { useEffect } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+
 import {
   Backdrop,
   Btn,
@@ -22,13 +25,29 @@ export const RegisterModal = ({ onClose }) => {
     password: yup.string().min(6).max(16).required(),
   });
 
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+
   const initialValues = {
     name: '',
     email: '',
     password: '',
   };
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
+    // console.log(values);
+    // setEmail(values.email);
+    // setPassword(values.password);
+    // setName(values.name);
+    const email = values.email;
+    const password = values.password;
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        console.log(userCredential);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     resetForm();
   };
 

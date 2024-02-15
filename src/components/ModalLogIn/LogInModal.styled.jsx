@@ -87,6 +87,7 @@ export const Cross = styled.button`
   position: absolute;
   top: 28px;
   right: 28px;
+  background-color: transparent;
 `;
 
 export const Eye = styled.button`

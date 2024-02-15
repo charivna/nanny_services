@@ -13,7 +13,9 @@ import {
 import icons from '../../common/sprite.svg';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { auth } from '../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -26,8 +28,22 @@ const initialValues = {
 };
 
 export const LogInModal = ({ onClose }) => {
+  const [error, setError] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
+    const email = values.email;
+    const password = values.password;
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        console.log(userCredential);
+        setError('');
+      })
+      .catch(error => {
+        console.log(error);
+        setError("SORRY, THIS ACCOUNT DOESN'T EXIST");
+      });
     resetForm();
   };
 
@@ -78,6 +94,11 @@ export const LogInModal = ({ onClose }) => {
             <use href={`${icons}#cross`} />
           </svg>
         </Cross>
+        {error ? (
+          <p style={{ color: 'red', margin: '20px 60px' }}>{error}</p>
+        ) : (
+          ''
+        )}
       </ModalWindow>
     </Backdrop>
   );

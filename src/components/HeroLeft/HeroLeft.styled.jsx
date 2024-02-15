@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Block = styled.div`
@@ -25,7 +26,8 @@ export const Text = styled.p`
   margin-bottom: 40px;
 `;
 
-export const StartBtn = styled.button`
+export const StartBtn = styled(NavLink)`
+  width: 236px;
   box-sizing: border-box;
   align-self: flex-end;
   padding: 14px 39px;
