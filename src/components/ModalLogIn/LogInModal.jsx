@@ -29,22 +29,20 @@ const initialValues = {
 
 export const LogInModal = ({ onClose }) => {
   const [error, setError] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
 
-  const handleSubmit = (values, { resetForm }) => {
-    const email = values.email;
-    const password = values.password;
-    signInWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        console.log(userCredential);
-        setError('');
-      })
-      .catch(error => {
-        console.log(error);
-        setError("SORRY, THIS ACCOUNT DOESN'T EXIST");
-      });
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      const email = values.email;
+      const password = values.password;
+
+      await signInWithEmailAndPassword(auth, email, password);
+
+      setError('');
+      onClose();
+      resetForm();
+    } catch (error) {
+      setError("SORRY, THIS ACCOUNT DOESN'T EXIST");
+    }
   };
 
   useEffect(() => {

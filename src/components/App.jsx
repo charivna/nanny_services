@@ -4,6 +4,8 @@ import HomePage from 'pages/HomePage';
 import FavoritesPage from 'pages/FavoritesPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import CatalogPage from 'pages/CatalogPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const App = () => {
   return (
@@ -16,6 +18,7 @@ export const App = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
+      <ToastContainer autoClose={1000} />
     </>
   );
 };

@@ -1,5 +1,7 @@
 import { auth } from '../../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { useState, useEffect } = require('react');
 const {
@@ -12,6 +14,8 @@ const {
   NavBtn,
   Btn,
   HeaderContainer,
+  Name,
+  AuthWrapper,
 } = require('./Header.styled');
 const { NavLink } = require('react-router-dom');
 const { LogInModal } = require('components/ModalLogIn/LogInModal');
@@ -51,11 +55,11 @@ const Header = () => {
   };
 
   const userSignOut = () => {
-    signOut(auth).then(() =>
-      console.log('You loged out').catch(e => {
-        console.log(e);
-      })
-    );
+    signOut(auth)
+      .then(() => toast.success('You have successfully logged out'))
+      .catch(error => {
+        toast.error(`Logout failed: ${error.message}`);
+      });
   };
   return (
     <>
@@ -76,10 +80,10 @@ const Header = () => {
             </li> */}
           </NavList>
           {authUser ? (
-            <div>
-              <h1>{authUser.email}</h1>
+            <AuthWrapper>
+              <Name>{authUser.displayName}</Name>
               <Btn onClick={userSignOut}>LogOut</Btn>
-            </div>
+            </AuthWrapper>
           ) : (
             <NavBtn>
               <li>

@@ -2,7 +2,7 @@ import icons from '../../common/sprite.svg';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { useEffect } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase';
 
 import {
@@ -34,21 +34,18 @@ export const RegisterModal = ({ onClose }) => {
     email: '',
     password: '',
   };
-  const handleSubmit = (values, { resetForm }) => {
-    // console.log(values);
-    // setEmail(values.email);
-    // setPassword(values.password);
-    // setName(values.name);
-    const email = values.email;
-    const password = values.password;
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        console.log(userCredential);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      const email = values.email;
+      const password = values.password;
+
+      await createUserWithEmailAndPassword(auth, email, password);
+
+      await updateProfile(auth.currentUser, { displayName: values.name });
+
+      resetForm();
+      onClose();
+    } catch (error) {}
   };
 
   useEffect(() => {

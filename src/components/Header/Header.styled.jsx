@@ -119,3 +119,15 @@ export const Btn = styled.button`
     background-color: rgb(84, 190, 150);
   }
 `;
+
+export const Name = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 28px;
+`;
+
+export const AuthWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
