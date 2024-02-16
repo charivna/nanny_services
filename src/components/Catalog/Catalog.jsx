@@ -1,9 +1,12 @@
 import { get, ref } from 'firebase/database';
 import { db } from '../../firebase';
 import { useEffect, useState } from 'react';
+import { Card } from 'components/Card/Card';
+import { BtnLoadMore } from './Catalog.styled';
 
 export const Catalog = () => {
   const [psycho, setPsycho] = useState([]);
+  const [visiblePsycho, setVisiblePsycho] = useState(3);
 
   useEffect(() => {
     const psychosRef = ref(db, '/');
@@ -17,7 +20,7 @@ export const Catalog = () => {
               ...data,
             })
           );
-          setPsycho(psychoArray);
+          setPsycho(psychoArray.slice(0, visiblePsycho));
         } else {
           console.log('Говно');
         }
@@ -25,7 +28,19 @@ export const Catalog = () => {
       .catch(error => {
         console.log(error);
       });
-  }, []);
+  }, [visiblePsycho]);
 
-  return <div style={{ color: 'red' }}>{psycho[0]?.about}</div>;
+  const handleLoadMore = () => {
+    setVisiblePsycho(prevVisiblePsycho => prevVisiblePsycho + 3);
+  };
+  return (
+    <div>
+      <ul>
+        {psycho.map((person, index) => (
+          <Card key={index} person={person} />
+        ))}
+      </ul>
+      <BtnLoadMore onClick={handleLoadMore}>Load more</BtnLoadMore>
+    </div>
+  );
 };
