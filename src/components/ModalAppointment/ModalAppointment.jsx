@@ -5,7 +5,6 @@ import {
   AppWindow,
   Backdrop,
   ImagePsycho,
-  ImgWrap,
   InfoPsycho,
   Name,
   Text,

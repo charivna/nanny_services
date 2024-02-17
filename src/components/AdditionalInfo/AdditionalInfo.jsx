@@ -7,7 +7,6 @@ import {
   WrapRev,
 } from './AdditionalInfo.styled';
 import icons from '../../common/sprite.svg';
-import { useState } from 'react';
 
 export const AdditionalInfo = ({ review, index }) => {
   const firstLetter = review.reviewer.charAt(0).toUpperCase();
