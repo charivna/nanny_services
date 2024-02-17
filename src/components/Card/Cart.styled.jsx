@@ -99,3 +99,40 @@ export const About = styled.p`
   margin-top: 24px;
   margin-bottom: 14px;
 `;
+
+export const BtnLike = styled.button`
+  background-color: transparent;
+`;
+
+export const AppointmentBtn = styled.button`
+  box-sizing: border-box;
+  align-self: flex-end;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 40px 0 24px 0;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border-radius: 30px;
+  display: flex;
+  height: 52px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  border: 1px solid rgba(25, 26, 21, 0.2);
+  background-color: rgb(84, 190, 150);
+  transition: box-shadow 0.3s ease;
+  color: rgb(251, 251, 251);
+  cursor: pointer;
+  gap: 18px;
+  letter-spacing: -0.02em;
+  &:hover {
+    background-color: rgb(54, 163, 121);
+  }
+`;
+
+export const ReadMoreBtn = styled.button`
+  font-weight: 500;
+  text-decoration-line: underline;
+  background-color: transparent;
+`;

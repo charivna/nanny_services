@@ -1,8 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { AdditionalInfo } from 'components/AdditionalInfo/AdditionalInfo';
 import icons from '../../common/sprite.svg';
 import {
   About,
   AddingInfo,
+  AppointmentBtn,
+  BtnLike,
   CardWrap,
   FirstLine,
   InfoWrap,
@@ -11,13 +13,31 @@ import {
   Price,
   PsTittle,
   Rating,
+  ReadMoreBtn,
   RightPart,
   SecondBlock,
   Value,
   WrapImg,
 } from './Cart.styled';
+import { useState } from 'react';
+import { ModalAppointment } from 'components/ModalAppointment/ModalAppointment';
 
 export const Card = ({ person }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [isMoreInfo, setMoreInfo] = useState(false);
+  const [isAppModalOpen, setAppModalOpen] = useState(false);
+
+  const handlerClickAppointment = () => {
+    setAppModalOpen(prevIsAppModalOpen => !prevIsAppModalOpen);
+  };
+
+  const handlerClickReadMore = () => {
+    setMoreInfo(prevIsMoreInfo => !prevIsMoreInfo);
+  };
+
+  const handlerClickLike = () => {
+    setIsLiked(prevIsLiked => !prevIsLiked);
+  };
   return (
     <CardWrap>
       <WrapImg>
@@ -42,13 +62,25 @@ export const Card = ({ person }) => {
                 {person.price_per_hour}$
               </span>{' '}
             </Price>
-            <svg
-              width={26}
-              height={26}
-              style={{ fill: 'white', stroke: 'black' }}
-            >
-              <use href={`${icons}#heart`} />
-            </svg>
+            <BtnLike onClick={() => handlerClickLike(person.id)}>
+              {isLiked ? (
+                <svg
+                  width={26}
+                  height={26}
+                  style={{ fill: 'white', stroke: 'black' }}
+                >
+                  <use href={`${icons}#choose-heart`} />
+                </svg>
+              ) : (
+                <svg
+                  width={26}
+                  height={26}
+                  style={{ fill: 'white', stroke: 'black' }}
+                >
+                  <use href={`${icons}#heart`} />
+                </svg>
+              )}
+            </BtnLike>
           </RightPart>
         </FirstLine>
 
@@ -69,7 +101,21 @@ export const Card = ({ person }) => {
         </SecondBlock>
 
         <About>{person.about}</About>
-        <NavLink>Read more</NavLink>
+        {isMoreInfo ? (
+          <>
+            <ul>
+              {person.reviews.map((review, index) => (
+                <AdditionalInfo key={index} review={review} index={index} />
+              ))}
+            </ul>
+            <AppointmentBtn onClick={handlerClickAppointment}>
+              Make an appointment
+            </AppointmentBtn>
+            {isAppModalOpen && <ModalAppointment person={person} />}
+          </>
+        ) : (
+          <ReadMoreBtn onClick={handlerClickReadMore}>Read more</ReadMoreBtn>
+        )}
       </InfoWrap>
     </CardWrap>
   );

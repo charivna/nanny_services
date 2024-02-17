@@ -3,6 +3,7 @@ import { db } from '../../firebase';
 import { useEffect, useState } from 'react';
 import { Card } from 'components/Card/Card';
 import { BtnLoadMore } from './Catalog.styled';
+import { nanoid } from 'nanoid';
 
 export const Catalog = () => {
   const [psycho, setPsycho] = useState([]);
@@ -16,7 +17,7 @@ export const Catalog = () => {
         if (snapshot.exists()) {
           const psychoArray = Object.entries(snapshot.val()).map(
             ([id, data]) => ({
-              id,
+              id: nanoid(),
               ...data,
             })
           );
@@ -36,11 +37,13 @@ export const Catalog = () => {
   return (
     <div>
       <ul>
-        {psycho.map((person, index) => (
-          <Card key={index} person={person} />
+        {psycho.map(person => (
+          <Card key={person.id} person={person} />
         ))}
       </ul>
-      <BtnLoadMore onClick={handleLoadMore}>Load more</BtnLoadMore>
+      {psycho.length >= 3 && psycho.length < 32 && (
+        <BtnLoadMore onClick={handleLoadMore}>Load more</BtnLoadMore>
+      )}
     </div>
   );
 };
