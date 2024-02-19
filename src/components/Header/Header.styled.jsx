@@ -65,6 +65,7 @@ export const Home = styled.li`
 
 export const Catalog = styled.li`
   position: relative;
+  margin-right: 40px;
 
   a {
     text-decoration: none;
@@ -83,6 +84,32 @@ export const Catalog = styled.li`
         position: absolute;
         left: 50%;
         bottom: -8px;
+        transform: translateX(-50%);
+      }
+    }
+  }
+`;
+
+export const Favorite = styled.li`
+  position: relative;
+
+  a {
+    text-decoration: none;
+    color: black;
+
+    &.active {
+      color: black;
+
+      &::after {
+        content: ' ';
+        display: block;
+        width: 8px;
+        height: 8px;
+        background-color: rgb(84, 190, 150);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
         transform: translateX(-50%);
       }
     }

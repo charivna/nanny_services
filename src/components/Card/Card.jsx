@@ -38,6 +38,10 @@ export const Card = ({ person }) => {
   const handlerClickLike = () => {
     setIsLiked(prevIsLiked => !prevIsLiked);
   };
+
+  const handlerCloseModal = () => {
+    setAppModalOpen(false);
+  };
   return (
     <CardWrap>
       <WrapImg>
@@ -111,7 +115,9 @@ export const Card = ({ person }) => {
             <AppointmentBtn onClick={handlerClickAppointment}>
               Make an appointment
             </AppointmentBtn>
-            {isAppModalOpen && <ModalAppointment person={person} />}
+            {isAppModalOpen && (
+              <ModalAppointment person={person} onClose={handlerCloseModal} />
+            )}
           </>
         ) : (
           <ReadMoreBtn onClick={handlerClickReadMore}>Read more</ReadMoreBtn>

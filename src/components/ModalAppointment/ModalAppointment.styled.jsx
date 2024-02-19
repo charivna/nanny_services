@@ -1,3 +1,4 @@
+import { Field } from 'formik';
 import styled from 'styled-components';
 
 export const Backdrop = styled.div`
@@ -17,8 +18,7 @@ export const AppWindow = styled.div`
   position: relative;
   box-sizing: border-box;
   max-width: 600px;
-  height: 100%;
-  max-height: 600px;
+  max-height: 860px;
   overflow-y: auto;
   padding: 64px;
   border-radius: 30px;
@@ -35,6 +35,7 @@ export const InfoPsycho = styled.div`
   display: flex;
   gap: 14px;
   align-items: center;
+  margin-bottom: 40px;
 `;
 
 export const Tittle = styled.h1`
@@ -59,4 +60,87 @@ export const Name = styled.p`
   font-weight: 500;
   color: rgb(25, 26, 21);
   margin-top: 4px;
+`;
+export const Cross = styled.button`
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  background-color: transparent;
+`;
+
+export const BigInput = styled(Field)`
+  box-sizing: border-box;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  width: 472px;
+  height: 52px;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+
+  &::placeholder {
+    color: rgb(25, 26, 21);
+    font-size: 16px;
+  }
+`;
+
+export const SmallInput = styled(Field)`
+  box-sizing: border-box;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  width: 232px;
+  height: 52px;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+
+  &::placeholder {
+    color: rgb(25, 26, 21);
+    font-size: 16px;
+  }
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+export const InputComment = styled(Field)`
+  box-sizing: border-box;
+  border: 1px solid rgba(25, 26, 21, 0.1);
+  border-radius: 12px;
+  width: 472px;
+  height: 116px;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+
+  &::placeholder {
+    color: rgb(25, 26, 21);
+    font-size: 16px;
+  }
+`;
+
+export const BtnSend = styled.button`
+  box-sizing: border-box;
+  align-self: flex-end;
+  padding: 16px 217px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 22px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border-radius: 30px;
+  display: flex;
+  height: 52px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  border: 1px solid rgba(25, 26, 21, 0.2);
+  background-color: rgb(84, 190, 150);
+  transition: box-shadow 0.3s ease;
+  color: rgb(251, 251, 251);
+  cursor: pointer;
+  gap: 18px;
+  letter-spacing: -0.02em;
+  &:hover {
+    background-color: rgb(54, 163, 121);
+  }
 `;

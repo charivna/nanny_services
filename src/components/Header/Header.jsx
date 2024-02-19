@@ -16,6 +16,7 @@ const {
   HeaderContainer,
   Name,
   AuthWrapper,
+  Favorite,
 } = require('./Header.styled');
 const { NavLink } = require('react-router-dom');
 const { LogInModal } = require('components/ModalLogIn/LogInModal');
@@ -75,9 +76,11 @@ const Header = () => {
             <Catalog>
               <NavLink to="/catalog">Psychologists</NavLink>
             </Catalog>
-            {/* <li>
-              <NavLink to="/favorites">Favorites</NavLink>
-            </li> */}
+            {authUser && (
+              <Favorite>
+                <NavLink to="/favorites">Favorites</NavLink>
+              </Favorite>
+            )}
           </NavList>
           {authUser ? (
             <AuthWrapper>

@@ -1,16 +1,25 @@
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
+import icons from '../../common/sprite.svg';
+import styled from 'styled-components';
 import {
   AppWindow,
   Backdrop,
+  BigInput,
+  BtnSend,
+  Cross,
   ImagePsycho,
   InfoPsycho,
+  InputComment,
+  InputWrapper,
   Name,
+  SmallInput,
   Text,
   Tittle,
   YourPs,
 } from './ModalAppointment.styled';
+import { useEffect } from 'react';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -28,20 +37,67 @@ const initialValues = {
   comment: '',
 };
 
-export const ModalAppointment = ({ person }) => {
+const appointmentTimes = [
+  '9:00 AM',
+  '9:30 AM',
+  '10:00 AM',
+  '10:30 AM',
+  '11:00 AM',
+  '11:30 AM',
+  '12:00 PM',
+  '12:30 PM',
+  '1:00 PM',
+  '1:30 PM',
+  '2:00 PM',
+  '2:30 PM',
+];
+
+export const ModalAppointment = ({ person, onClose }) => {
+  useEffect(() => {
+    const handleKeyPress = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [onClose]);
+
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      console.log(values);
+      console.log('Form Values:', values);
       toast.success(
         `Appointment scheduled successfully with ${person.name} at ${values.time}!`
       );
+      await new Promise(resolve => setTimeout(resolve, 2500));
       resetForm();
+      onClose();
     } catch (error) {
       console.log(error);
     }
   };
+
+  const StyledSelect = styled.select`
+    box-sizing: border-box;
+    border: 1px solid rgba(25, 26, 21, 0.1);
+    border-radius: 12px;
+    width: 232px;
+    height: 52px;
+    margin-bottom: 18px;
+    padding: 16px 18px;
+
+    &::placeholder {
+      color: rgb(25, 26, 21);
+      font-size: 16px;
+    }
+  `;
+
   return (
-    <Backdrop>
+    <Backdrop onClick={onClose}>
       <AppWindow onClick={e => e.stopPropagation()}>
         <Tittle>Make an appointment with a psychologists</Tittle>
         <Text>
@@ -64,14 +120,37 @@ export const ModalAppointment = ({ person }) => {
           onSubmit={handleSubmit}
         >
           <Form>
-            <Field name="name" placeholder="Name"></Field>
-            <Field name="number" placeholder="+380"></Field>
-            <Field name="time" placeholder="Meeting time"></Field>
-            <Field name="email" placeholder="Email"></Field>
-            <Field name="comment" placeholder="Comment"></Field>
-            <button type="submit">Send</button>
+            <BigInput name="name" placeholder="Name"></BigInput>
+            <InputWrapper>
+              <SmallInput name="number" placeholder="+380"></SmallInput>
+              <Field as={StyledSelect} name="time" placeholder="Meeting time">
+                <option value="" disabled>
+                  00:00
+                </option>
+                {appointmentTimes.map(time => (
+                  <option key={time} value={time}>
+                    {time}
+                  </option>
+                ))}
+              </Field>
+            </InputWrapper>
+            <BigInput name="email" placeholder="Email"></BigInput>
+            <InputComment name="comment" placeholder="Comment"></InputComment>
+            <BtnSend
+              type="submit"
+              onClick={() => {
+                console.log('hello');
+              }}
+            >
+              Send
+            </BtnSend>
           </Form>
         </Formik>
+        <Cross onClick={onClose}>
+          <svg width={16} height={16}>
+            <use href={`${icons}#cross`} />
+          </svg>
+        </Cross>
       </AppWindow>
       <ToastContainer position="bottom-right" autoClose={3000} />
     </Backdrop>
