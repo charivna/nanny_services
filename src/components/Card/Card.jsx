@@ -19,13 +19,50 @@ import {
   Value,
   WrapImg,
 } from './Cart.styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ModalAppointment } from 'components/ModalAppointment/ModalAppointment';
+import { auth } from '../../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export const Card = ({ person }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isMoreInfo, setMoreInfo] = useState(false);
   const [isAppModalOpen, setAppModalOpen] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      const userId = user?.uid;
+      const storedFavorites =
+        JSON.parse(localStorage.getItem(`favorites-${userId}`)) || [];
+      setIsLiked(
+        storedFavorites.some(fav => fav.avatar_url === person.avatar_url)
+      );
+    });
+
+    return () => unsubscribe();
+  }, [person.avatar_url]);
+
+  useEffect(() => {
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      try {
+        const userPreferences = JSON.parse(localStorage.getItem(userId)) || {};
+        userPreferences.favorites = userPreferences.favorites || [];
+
+        if (isLiked) {
+          userPreferences.favorites.push(person.avatar_url);
+        } else {
+          userPreferences.favorites = userPreferences.favorites.filter(
+            id => id !== person.avatar_url
+          );
+        }
+
+        localStorage.setItem(userId, JSON.stringify(userPreferences));
+      } catch (error) {
+        console.error('Error writing to localStorage:', error);
+      }
+    }
+  }, [isLiked, person.avatar_url]);
 
   const handlerClickAppointment = () => {
     setAppModalOpen(prevIsAppModalOpen => !prevIsAppModalOpen);
@@ -34,14 +71,38 @@ export const Card = ({ person }) => {
   const handlerClickReadMore = () => {
     setMoreInfo(prevIsMoreInfo => !prevIsMoreInfo);
   };
-
   const handlerClickLike = () => {
-    setIsLiked(prevIsLiked => !prevIsLiked);
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      const newIsFavorite = !isLiked;
+      setIsLiked(newIsFavorite);
+
+      const storedFavorites =
+        JSON.parse(localStorage.getItem(`favorites-${userId}`)) || [];
+
+      if (newIsFavorite) {
+        localStorage.setItem(
+          `favorites-${userId}`,
+          JSON.stringify([...storedFavorites, person])
+        );
+      } else {
+        const updatedFavorites = storedFavorites.filter(
+          fav => fav.avatar_url !== person.avatar_url
+        );
+        localStorage.setItem(
+          `favorites-${userId}`,
+          JSON.stringify(updatedFavorites)
+        );
+      }
+    } else {
+      console.error('Error: User not logged in.');
+    }
   };
 
   const handlerCloseModal = () => {
     setAppModalOpen(false);
   };
+
   return (
     <CardWrap>
       <WrapImg>
@@ -66,7 +127,7 @@ export const Card = ({ person }) => {
                 {person.price_per_hour}$
               </span>{' '}
             </Price>
-            <BtnLike onClick={() => handlerClickLike(person.id)}>
+            <BtnLike onClick={handlerClickLike}>
               {isLiked ? (
                 <svg
                   width={26}
