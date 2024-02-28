@@ -20,7 +20,7 @@ const options = [
   'Show all',
 ];
 
-const Filter = () => {
+const Filter = ({ onFilterChange }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [option, setOption] = useState(options[0]);
 
@@ -28,6 +28,8 @@ const Filter = () => {
     console.log(selectedOption);
     setOption(selectedOption);
     setDropdownOpen(false);
+
+    onFilterChange(selectedOption);
   };
 
   return (

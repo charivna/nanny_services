@@ -2,6 +2,7 @@ import { auth } from '../../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import icons from '../../common/sprite.svg';
 
 const { useState, useEffect } = require('react');
 const {
@@ -17,6 +18,7 @@ const {
   Name,
   AuthWrapper,
   Favorite,
+  WrapIcon,
 } = require('./Header.styled');
 const { NavLink } = require('react-router-dom');
 const { LogInModal } = require('components/ModalLogIn/LogInModal');
@@ -84,6 +86,12 @@ const Header = () => {
           </NavList>
           {authUser ? (
             <AuthWrapper>
+              <WrapIcon>
+                <svg width={20} height={20}>
+                  <use href={`${icons}#users`} />
+                </svg>
+              </WrapIcon>
+
               <Name>{authUser.displayName}</Name>
               <Btn onClick={userSignOut}>LogOut</Btn>
             </AuthWrapper>

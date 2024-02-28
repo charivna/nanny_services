@@ -158,3 +158,14 @@ export const AuthWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const WrapIcon = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgb(84, 190, 150);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 14px;
+`;
