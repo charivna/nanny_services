@@ -18,7 +18,7 @@ export const AppWindow = styled.div`
   position: relative;
   box-sizing: border-box;
   max-width: 600px;
-  max-height: 860px;
+  max-height: 100%;
   overflow-y: auto;
   padding: 64px;
   border-radius: 30px;

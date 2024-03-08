@@ -19,8 +19,7 @@ export const ModalWindow = styled.div`
   position: relative;
   box-sizing: border-box;
   max-width: 566px;
-  height: 100%;
-  max-height: 580px;
+  max-height: 100%;
   overflow-y: auto;
   padding: 64px;
   border-radius: 30px;
@@ -46,7 +45,7 @@ export const Input = styled(Field)`
   box-sizing: border-box;
   border: 1px solid rgba(25, 26, 21, 0.1);
   border-radius: 12px;
-  width: 438px;
+  width: 100%;
   height: 52px;
   margin-bottom: 18px;
   padding: 16px 18px;

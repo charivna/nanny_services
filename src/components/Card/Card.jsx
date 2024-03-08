@@ -1,4 +1,7 @@
 import { AdditionalInfo } from 'components/AdditionalInfo/AdditionalInfo';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import icons from '../../common/sprite.svg';
 import {
   About,
@@ -59,7 +62,7 @@ export const Card = ({ person }) => {
 
         localStorage.setItem(userId, JSON.stringify(userPreferences));
       } catch (error) {
-        console.error('Error writing to localStorage:', error);
+        toast.error('Error writing to localStorage:', error);
       }
     }
   }, [isLiked, person.avatar_url]);
@@ -73,6 +76,10 @@ export const Card = ({ person }) => {
   };
   const handlerClickLike = () => {
     const userId = auth.currentUser?.uid;
+    if (!userId) {
+      toast.error('You are not authorized. Please log in to add to favorites.');
+      return;
+    }
     if (userId) {
       const newIsFavorite = !isLiked;
       setIsLiked(newIsFavorite);
@@ -95,7 +102,7 @@ export const Card = ({ person }) => {
         );
       }
     } else {
-      console.error('Error: User not logged in.');
+      toast.error('Error: User not logged in.');
     }
   };
 
@@ -105,6 +112,7 @@ export const Card = ({ person }) => {
 
   return (
     <CardWrap>
+      <ToastContainer />
       <WrapImg>
         <Photo src={person.avatar_url} alt="psychologist_photo" />
       </WrapImg>

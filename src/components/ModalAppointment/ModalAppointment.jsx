@@ -54,6 +54,8 @@ const appointmentTimes = [
 
 export const ModalAppointment = ({ person, onClose }) => {
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
     const handleKeyPress = e => {
       if (e.code === 'Escape') {
         onClose();
@@ -63,6 +65,8 @@ export const ModalAppointment = ({ person, onClose }) => {
     document.addEventListener('keydown', handleKeyPress);
 
     return () => {
+
+      document.body.style.overflow = 'auto';
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, [onClose]);

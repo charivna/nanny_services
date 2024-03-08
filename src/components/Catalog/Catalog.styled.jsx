@@ -26,3 +26,8 @@ export const BtnLoadMore = styled.button`
     background-color: rgb(54, 163, 121);
   }
 `;
+
+export const List = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+`;

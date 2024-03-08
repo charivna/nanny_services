@@ -1,7 +1,7 @@
 import icons from '../../common/sprite.svg';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase';
 
@@ -18,22 +18,25 @@ import {
   WrapperEye,
 } from './RegisterModal.styled';
 
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(6).max(16).required(),
+});
+
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+};
+
 export const RegisterModal = ({ onClose }) => {
-  const schema = yup.object().shape({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().min(6).max(16).required(),
-  });
+  const [showPassword, setShowPassword] = useState(false);
 
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
-  const initialValues = {
-    name: '',
-    email: '',
-    password: '',
+  const togglePasswordVisibility = () => {
+    setShowPassword(prevShowPassword => !prevShowPassword);
   };
+
   const handleSubmit = async (values, { resetForm }) => {
     try {
       const email = values.email;
@@ -49,6 +52,8 @@ export const RegisterModal = ({ onClose }) => {
   };
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
     const handleKeyPress = e => {
       if (e.code === 'Escape') {
         onClose();
@@ -58,6 +63,7 @@ export const RegisterModal = ({ onClose }) => {
     document.addEventListener('keydown', handleKeyPress);
 
     return () => {
+      document.body.style.overflow = 'auto';
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, [onClose]);
@@ -81,12 +87,24 @@ export const RegisterModal = ({ onClose }) => {
             <Input type="text" placeholder="Email" name="email" />
             <Error name="email" component="div" />
             <WrapperEye>
-              <Input type="password" placeholder="Password" name="password" />
-              <Eye>
-                <svg width={16} height={16}>
-                  <use href={`${icons}#eye-blocked`} />
-                </svg>
-              </Eye>
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Password"
+                name="password"
+              />
+              {showPassword ? (
+                <Eye onClick={togglePasswordVisibility}>
+                  <svg width={16} height={16}>
+                    <use href={`${icons}#eye`} />
+                  </svg>
+                </Eye>
+              ) : (
+                <Eye onClick={togglePasswordVisibility}>
+                  <svg width={16} height={16}>
+                    <use href={`${icons}#eye-blocked`} />
+                  </svg>
+                </Eye>
+              )}
             </WrapperEye>
             <Error name="password" component="div" />
             <Btn type="submit">Sign Up</Btn>

@@ -29,6 +29,11 @@ const initialValues = {
 
 export const LogInModal = ({ onClose }) => {
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(prevShowPassword => !prevShowPassword);
+  };
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -46,6 +51,8 @@ export const LogInModal = ({ onClose }) => {
   };
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
     const handleKeyPress = e => {
       if (e.code === 'Escape') {
         onClose();
@@ -55,6 +62,7 @@ export const LogInModal = ({ onClose }) => {
     document.addEventListener('keydown', handleKeyPress);
 
     return () => {
+      document.body.style.overflow = 'auto';
       document.removeEventListener('keydown', handleKeyPress);
     };
   }, [onClose]);
@@ -76,12 +84,24 @@ export const LogInModal = ({ onClose }) => {
             <Input type="text" placeholder="Email" name="email" />
             <Error name="email" component="div" />
             <WrapperEye>
-              <Input type="password" placeholder="Password" name="password" />
-              <Eye>
-                <svg width={16} height={16}>
-                  <use href={`${icons}#eye-blocked`} />
-                </svg>
-              </Eye>
+              <Input
+                placeholder="Password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+              />
+              {showPassword ? (
+                <Eye onClick={togglePasswordVisibility}>
+                  <svg width={16} height={16}>
+                    <use href={`${icons}#eye`} />
+                  </svg>
+                </Eye>
+              ) : (
+                <Eye onClick={togglePasswordVisibility}>
+                  <svg width={16} height={16}>
+                    <use href={`${icons}#eye-blocked`} />
+                  </svg>
+                </Eye>
+              )}
             </WrapperEye>
             <Error name="password" component="div" />
             <Btn type="submit">Log In</Btn>

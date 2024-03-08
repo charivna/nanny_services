@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { get, ref } from 'firebase/database';
 import { db } from '../../firebase';
 import { Card } from 'components/Card/Card';
-import { BtnLoadMore } from './Catalog.styled';
+import { BtnLoadMore, List } from './Catalog.styled';
 import { nanoid } from 'nanoid';
+import { toast } from 'react-toastify';
+import Loader from 'components/Loader/Loader';
+import { LoaderContainer } from 'components/Loader/Loader.styled';
 
 export const Catalog = ({ filterOption }) => {
   const [psycho, setPsycho] = useState([]);
@@ -14,8 +17,6 @@ export const Catalog = ({ filterOption }) => {
       try {
         const psychosRef = ref(db, '/');
         const snapshot = await get(psychosRef);
-
-        console.log('Data:', snapshot.val());
 
         if (snapshot.exists()) {
           const psychoArray = Object.entries(snapshot.val()).map(
@@ -29,10 +30,10 @@ export const Catalog = ({ filterOption }) => {
 
           setPsycho(filteredPsycho.slice(0, visiblePsycho));
         } else {
-          console.log('Говно');
+          toast.error('No data available');
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        toast.error('Error fetching data:', error);
       }
     };
 
@@ -64,11 +65,16 @@ export const Catalog = ({ filterOption }) => {
 
   return (
     <div>
-      <ul>
+      {visiblePsycho === 0 && (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      )}
+      <List>
         {psycho.map(person => (
           <Card key={person.id} person={person} />
         ))}
-      </ul>
+      </List>
       {psycho.length >= 3 && psycho.length < 32 && (
         <BtnLoadMore onClick={handleLoadMore}>Load more</BtnLoadMore>
       )}
