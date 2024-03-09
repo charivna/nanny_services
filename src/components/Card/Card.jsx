@@ -27,7 +27,7 @@ import { ModalAppointment } from 'components/ModalAppointment/ModalAppointment';
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
-export const Card = ({ person }) => {
+export const Card = ({ person, handleFavorite, sourceComponent }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isMoreInfo, setMoreInfo] = useState(false);
   const [isAppModalOpen, setAppModalOpen] = useState(false);
@@ -83,6 +83,7 @@ export const Card = ({ person }) => {
     if (userId) {
       const newIsFavorite = !isLiked;
       setIsLiked(newIsFavorite);
+      console.log(newIsFavorite);
 
       const storedFavorites =
         JSON.parse(localStorage.getItem(`favorites-${userId}`)) || [];
@@ -100,6 +101,9 @@ export const Card = ({ person }) => {
           `favorites-${userId}`,
           JSON.stringify(updatedFavorites)
         );
+        if (sourceComponent === 'FavoritePage') {
+          handleFavorite();
+        }
       }
     } else {
       toast.error('Error: User not logged in.');

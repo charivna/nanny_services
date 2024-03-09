@@ -43,6 +43,9 @@ export const Home = styled.li`
   a {
     text-decoration: none;
     color: black;
+    &:hover {
+      color: rgb(84, 190, 150);
+    }
 
     &.active {
       color: black;
@@ -71,6 +74,10 @@ export const Catalog = styled.li`
     text-decoration: none;
     color: black;
 
+    &:hover {
+      color: rgb(84, 190, 150);
+    }
+
     &.active {
       color: black;
 
@@ -96,6 +103,10 @@ export const Favorite = styled.li`
   a {
     text-decoration: none;
     color: black;
+
+    &:hover {
+      color: rgb(84, 190, 150);
+    }
 
     &.active {
       color: black;

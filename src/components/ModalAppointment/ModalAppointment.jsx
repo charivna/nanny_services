@@ -20,6 +20,7 @@ import {
   YourPs,
 } from './ModalAppointment.styled';
 import { useEffect } from 'react';
+import { Error } from 'components/ModalLogIn/LogInModal.styled';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -65,7 +66,6 @@ export const ModalAppointment = ({ person, onClose }) => {
     document.addEventListener('keydown', handleKeyPress);
 
     return () => {
-
       document.body.style.overflow = 'auto';
       document.removeEventListener('keydown', handleKeyPress);
     };
@@ -125,8 +125,10 @@ export const ModalAppointment = ({ person, onClose }) => {
         >
           <Form>
             <BigInput name="name" placeholder="Name"></BigInput>
+            <Error name="name" component="div" />
             <InputWrapper>
               <SmallInput name="number" placeholder="+380"></SmallInput>
+              <Error name="number" component="div" />
               <Field as={StyledSelect} name="time" placeholder="Meeting time">
                 <option value="" disabled>
                   00:00
@@ -137,9 +139,12 @@ export const ModalAppointment = ({ person, onClose }) => {
                   </option>
                 ))}
               </Field>
+              <Error name="time" component="div" />
             </InputWrapper>
             <BigInput name="email" placeholder="Email"></BigInput>
+            <Error name="email" component="div" />
             <InputComment name="comment" placeholder="Comment"></InputComment>
+            <Error name="comment" component="div" />
             <BtnSend
               type="submit"
               onClick={() => {

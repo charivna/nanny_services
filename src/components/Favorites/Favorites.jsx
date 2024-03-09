@@ -1,5 +1,5 @@
 // Favorites.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { auth } from '../../firebase';
 import { Card } from 'components/Card/Card';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -11,29 +11,51 @@ export const Favorites = ({ filterOption }) => {
   const [favoriteCards, setFavoriteCards] = useState([]);
   const [visibleFavoriteCards, setVisibleFavoriteCards] = useState(1);
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const userId = auth.currentUser?.uid;
-        if (userId) {
-          const storedFavorites =
-            (await JSON.parse(localStorage.getItem(`favorites-${userId}`))) ||
-            [];
-          setFavoriteCards(storedFavorites);
-        }
-      } catch (error) {
-        console.error('Error reading from localStorage:', error);
+  const fetchData = useCallback(() => {
+    try {
+      const userId = auth.currentUser?.uid;
+      if (userId) {
+        const storedFavorites =
+          JSON.parse(localStorage.getItem(`favorites-${userId}`)) || [];
+        setFavoriteCards(storedFavorites);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }, []);
 
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
-        fetchFavorites();
+        fetchData();
       }
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [fetchData]);
+
+  //   const fetchFavorites = async () => {
+  //     try {
+  //       const userId = auth.currentUser?.uid;
+  //       if (userId) {
+  //         const storedFavorites =
+  //           (await JSON.parse(localStorage.getItem(`favorites-${userId}`))) ||
+  //           [];
+  //         setFavoriteCards(storedFavorites);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error reading from localStorage:', error);
+  //     }
+  //   };
+
+  //   const unsubscribe = onAuthStateChanged(auth, user => {
+  //     if (user) {
+  //       fetchFavorites();
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
 
   const applyFilter = (cards, option) => {
     switch (option) {
@@ -65,6 +87,10 @@ export const Favorites = ({ filterOption }) => {
     );
   };
 
+  const handleFavorite = () => {
+    fetchData();
+  };
+
   return (
     <div>
       {filteredFavoriteCards.length === 0 ? (
@@ -76,7 +102,12 @@ export const Favorites = ({ filterOption }) => {
           {filteredFavoriteCards
             .slice(0, visibleFavoriteCards * 3)
             .map((favoriteCard, index) => (
-              <Card key={index} person={favoriteCard} />
+              <Card
+                key={index}
+                person={favoriteCard}
+                handleFavorite={handleFavorite}
+                sourceComponent="FavoritePage"
+              />
             ))}
           {filteredFavoriteCards.length > visibleFavoriteCards * 3 && (
             <BtnLoadMore onClick={handleLoadMore}>Load more</BtnLoadMore>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CardWrap = styled.li`
   display: flex;
-  margin: 32px auto;
+  margin-top: 32px;
   box-sizing: border-box;
   max-width: 1184px;
   padding: 24px;
@@ -135,4 +135,7 @@ export const ReadMoreBtn = styled.button`
   font-weight: 500;
   text-decoration-line: underline;
   background-color: transparent;
+  &:hover {
+    color: rgb(84, 190, 150);
+  }
 `;

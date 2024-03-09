@@ -84,6 +84,7 @@ export const RegisterModal = ({ onClose }) => {
         >
           <Form>
             <Input type="text" placeholder="Name" name="name" />
+            <Error name="name" component="div" />
             <Input type="text" placeholder="Email" name="email" />
             <Error name="email" component="div" />
             <WrapperEye>
@@ -93,13 +94,13 @@ export const RegisterModal = ({ onClose }) => {
                 name="password"
               />
               {showPassword ? (
-                <Eye onClick={togglePasswordVisibility}>
+                <Eye type="button" onClick={togglePasswordVisibility}>
                   <svg width={16} height={16}>
                     <use href={`${icons}#eye`} />
                   </svg>
                 </Eye>
               ) : (
-                <Eye onClick={togglePasswordVisibility}>
+                <Eye type="button" onClick={togglePasswordVisibility}>
                   <svg width={16} height={16}>
                     <use href={`${icons}#eye-blocked`} />
                   </svg>

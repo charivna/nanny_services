@@ -31,3 +31,12 @@ export const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
 `;
+
+export const Cap = styled.div`
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+  padding: 50px;
+  font-weight: 500;
+  font-size: 50px;
+`;

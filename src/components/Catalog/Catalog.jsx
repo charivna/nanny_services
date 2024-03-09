@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { get, ref } from 'firebase/database';
 import { db } from '../../firebase';
 import { Card } from 'components/Card/Card';
-import { BtnLoadMore, List } from './Catalog.styled';
+import { BtnLoadMore, Cap, List } from './Catalog.styled';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import Loader from 'components/Loader/Loader';
@@ -11,6 +11,7 @@ import { LoaderContainer } from 'components/Loader/Loader.styled';
 export const Catalog = ({ filterOption }) => {
   const [psycho, setPsycho] = useState([]);
   const [visiblePsycho, setVisiblePsycho] = useState(3);
+  const [dataFound, setDataFound] = useState(true);
 
   useEffect(() => {
     const fetchPsycho = async () => {
@@ -29,11 +30,14 @@ export const Catalog = ({ filterOption }) => {
           let filteredPsycho = applyFilter(psychoArray, filterOption);
 
           setPsycho(filteredPsycho.slice(0, visiblePsycho));
+          setDataFound(true);
         } else {
           toast.error('No data available');
+          setDataFound(false);
         }
       } catch (error) {
         toast.error('Error fetching data:', error);
+        setDataFound(false);
       }
     };
 
@@ -55,9 +59,9 @@ export const Catalog = ({ filterOption }) => {
       case 'Greater than 10$':
         return psychoArray.filter(person => person.price_per_hour > 10);
       case 'Popular':
-        return psychoArray.filter(person => person.rating > 4);
+        return psychoArray.sort((a, b) => b.rating - a.rating);
       case 'Non popular':
-        return psychoArray.filter(person => person.rating <= 4);
+        return psychoArray.sort((a, b) => a.rating - b.rating);
       default:
         return psychoArray;
     }
@@ -70,11 +74,17 @@ export const Catalog = ({ filterOption }) => {
           <Loader />
         </LoaderContainer>
       )}
-      <List>
-        {psycho.map(person => (
-          <Card key={person.id} person={person} />
-        ))}
-      </List>
+      {dataFound ? (
+        <List>
+          {psycho.length > 0 ? (
+            psycho.map(person => <Card key={person.id} person={person} />)
+          ) : (
+            <Cap>No psychologists found for the selected criteria.</Cap>
+          )}
+        </List>
+      ) : (
+        <div>No data found for the selected criteria.</div>
+      )}
       {psycho.length >= 3 && psycho.length < 32 && (
         <BtnLoadMore onClick={handleLoadMore}>Load more</BtnLoadMore>
       )}

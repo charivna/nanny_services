@@ -90,13 +90,13 @@ export const LogInModal = ({ onClose }) => {
                 type={showPassword ? 'text' : 'password'}
               />
               {showPassword ? (
-                <Eye onClick={togglePasswordVisibility}>
+                <Eye type="button" onClick={togglePasswordVisibility}>
                   <svg width={16} height={16}>
                     <use href={`${icons}#eye`} />
                   </svg>
                 </Eye>
               ) : (
-                <Eye onClick={togglePasswordVisibility}>
+                <Eye type="button" onClick={togglePasswordVisibility}>
                   <svg width={16} height={16}>
                     <use href={`${icons}#eye-blocked`} />
                   </svg>
