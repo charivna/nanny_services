@@ -14,6 +14,10 @@ export const Container = styled.div`
     rgba(84, 190, 150, 0.2) 25%,
     rgba(84, 190, 150, 0) 50%
   );
+
+  @media only screen and (max-width: 768px) {
+    background: white;
+  }
 `;
 export const ContainerCatalog = styled.div`
   margin: 0 auto;

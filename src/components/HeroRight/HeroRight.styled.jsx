@@ -6,16 +6,28 @@ export const Block = styled.div`
   align-self: flex-end;
   margin-top: 78px;
   position: relative;
-  padding-left: 123px;
-  padding-right: 128px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  @media only screen and (min-width: 320px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    padding-left: 123px;
+    padding-right: 128px;
+  }
 `;
 
 export const Rectangle = styled.div`
   gap: 16px;
   position: absolute;
+  bottom: 0;
   bottom: 14%;
-  right: 53%;
-  width: 311px;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 311px;
   display: flex;
   height: 118px;
   background-color: rgb(84, 190, 150);
@@ -23,6 +35,15 @@ export const Rectangle = styled.div`
   border-radius: 20px;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 768px) {
+    bottom: 14%;
+    left: 14%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    height: 80px;
+  }
 `;
 
 export const Check = styled.span`
@@ -48,7 +69,8 @@ export const Number = styled.span`
 
 export const Image = styled.img`
   border-radius: 15px;
-  height: 526px;
+  width: 100%;
+  height: auto;
 `;
 
 export const Orange = styled.div`
@@ -61,8 +83,12 @@ export const Orange = styled.div`
   justify-content: center;
   align-items: center;
   bottom: 80%;
-  right: 13%;
+  right: 0;
   transform: rotate(-45deg);
+
+  @media only screen and (min-width: 768px) {
+    right: 13%;
+  }
 `;
 
 export const Purple = styled.div`
@@ -75,6 +101,10 @@ export const Purple = styled.div`
   justify-content: center;
   align-items: center;
   bottom: 60%;
-  left: 13%;
+  left: 0;
   transform: rotate(45deg);
+
+  @media only screen and (min-width: 768px) {
+    left: 13%;
+  }
 `;

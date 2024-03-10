@@ -8,6 +8,11 @@ export const HeaderContainer = styled.header`
   padding: 24px 128px;
   align-items: center;
   border-bottom: 1px solid rgba(25, 26, 21, 0.1);
+  @media only screen and (max-width: 320px) {
+    padding: 0;
+    margin-left: 128px;
+    width: 100%;
+  }
 `;
 
 export const Logo = styled(NavLink)`
@@ -15,6 +20,14 @@ export const Logo = styled(NavLink)`
   font-size: 20px;
   letter-spacing: -0.02em;
   line-height: 1.2;
+
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+
+  @media only screen and (max-width: 320px) {
+    font-size: 14px;
+  }
 `;
 
 export const Psycho = styled.span`
@@ -29,11 +42,25 @@ export const Nav = styled.nav`
   align-items: center;
   flex-wrap: wrap;
   max-width: 1184px;
+
+  @media only screen and (max-width: 768px) {
+    padding: 16px;
+  }
+
+  @media only screen and (max-width: 320px) {
+    padding: 8px;
+  }
 `;
 
 export const NavList = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 15px;
+  }
+  @media only screen and (max-width: 320px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const Home = styled.li`
@@ -168,6 +195,10 @@ export const AuthWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 501px) {
+    margin-top: 15px;
+  }
 `;
 
 export const WrapIcon = styled.div`
